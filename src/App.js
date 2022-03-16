@@ -2,6 +2,7 @@ import {
   useEffect,
   useState,
   useReducer,
+  
 } from 'react';
 import './App.css';
 import Header from './header/Header';
@@ -13,10 +14,12 @@ function App() {
 
   
   const [dataState, setDataState] = useState([])
-  
-  const reducer=(action)=>{
+  let message_error;
+  const reducer=(state, action)=>{
     if(action.type==="next"){
-      return {urlState:dataState.next}
+
+      return {urlState:dataState.next, back:true, next:true}
+
     }else if(action.type==="previous"){
       return {urlState:dataState.previous}
     }
@@ -24,7 +27,7 @@ function App() {
       throw new Error();
     }
   }
-  const [urlApiState, dispatch] = useReducer(reducer, {urlState:"https://pokeapi.co/api/v2/pokemon?offset=0&limit=20"})
+  const [urlApiState, dispatch] = useReducer(reducer, {urlState:"https://pokeapi.co/api/v2/pokemon?offset=0&limit=20", back:false, next:true})
   useEffect(() => {
     const request = fetch(urlApiState.urlState)
     request
@@ -36,8 +39,8 @@ function App() {
         console.log(e)
       })
   }, [urlApiState.urlState])
+  console.log(dataState.next)
 
-  
   return ( 
     <ModalPokemonProvider>
       <Header searchData={(namePokemon)=> dispatch({type:"search", data:namePokemon})}/>
@@ -45,7 +48,7 @@ function App() {
       <div className='container_main'>
      
       <div className="flex">
-     
+      {message_error}
       {
         dataState.results? dataState.results.map(pokemon=>{
           return <MainContent url={pokemon.url} key={pokemon.name}/>
@@ -53,7 +56,7 @@ function App() {
       }
       </div>
       </div>
-      <Footer requestData={(type)=>dispatch({type:type})} />
+      <Footer requestData={(type)=>dispatch({type:type})}  back={urlApiState.back} next={urlApiState.next}/>
     </ModalPokemonProvider>
   );
 }
