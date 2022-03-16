@@ -1,24 +1,54 @@
-import logo from './logo.svg';
+import {
+  useEffect,
+  useState,
+  useReducer
+} from 'react';
 import './App.css';
+import Header from './header/Header';
+import Footer from './Footer/Footer';
+import MainContent from './MainContent/MainContent';
+import { ModalPokemonProvider } from './Contexts/ModalContext';
 
 function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+  const [dataState, setDataState] = useState([])
+  const reducer=(state, action)=>{
+    if(action.type==="next"){
+      return {urlState:dataState.next}
+    }else if(action.type==="previous"){
+      return {urlState:dataState.previous}
+    }else if(action.type==="search" && action.data){
+      return {urlState:`https://pokeapi.co/api/v2/pokemon/${action.data}/`}
+    }
+    else{
+      throw new Error();
+    }
+  }
+  const [state, dispatch] = useReducer(reducer, {urlState:"https://pokeapi.co/api/v2/pokemon?offset=0&limit=20"})
+  useEffect(() => {
+    const request = fetch(state.urlState)
+    request
+      .then(data => {
+        return data.json()
+      }).then(finalData => {
+       (finalData.count)?setDataState(finalData):console.log(finalData)
+      }).catch(e => {
+        console.log(e)
+      })
+  }, [state.urlState])
+  return ( 
+    <ModalPokemonProvider>
+      <Header searchData={(namePokemon)=> dispatch({type:"search", data:namePokemon})}/>
+      <div className='container_main'>
+      <div className="flex">
+      {
+        dataState.results? dataState.results.map(pokemon=>{
+          return <MainContent url={pokemon.url} key={pokemon.name}/>
+        }):''
+      }
+      </div>
+      </div>
+      <Footer requestData={(type)=>dispatch({type:type})} />
+    </ModalPokemonProvider>
   );
 }
 

@@ -1,0 +1,31 @@
+.card_pokemon{
+    width: 100%;
+    height: 100%;
+}
+
+.img_container{
+    height: 75%;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
+.img_pokemon{
+    height: auto;
+    width: auto;
+    max-width: 100%;
+    max-height: 100%;
+}
+.name_pokemon{
+    text-align: center;
+    margin: 0;
+}
+.button_details{
+    position: relative;
+    bottom: 0;
+    width: 100%;
+    color:whitesmoke;
+    font-weight: bold;
+    background-color:#2a75bb;
+    border-radius: 3px;
+    height: 15%;
+}
