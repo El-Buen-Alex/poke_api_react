@@ -4,6 +4,7 @@ import './MainContent.css'
 import PokemonCard from '../Components/PokemonCard'
 import Colors from '../shared/Colors'
 export default function MainContent(prop) {
+  
 const estado=UseFecth(prop.url)
 const {fetching, data, error}=estado
 const [color, setColor]= useState({})
