@@ -10,9 +10,9 @@ const {fetching, data, error}=estado
 const [color, setColor]= useState({})
 
 useEffect(()=>{
-  setColor({backgroundColor:''+Colors(data?.types[0].type.name)})
+  setColor({backgroundColor:''+Colors(estado.data?.types[0].type.name)})
   
-}, [fetching])
+}, [estado])
   return (
     <div  className='container'>
       <div className="card" style={color}>

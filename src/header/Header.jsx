@@ -10,19 +10,20 @@ export default function Header() {
   let message_error;
 
   const fetchData=UseFecth(dataBusqueda.trim()!==''?`https://pokeapi.co/api/v2/pokemon/${dataBusqueda}`:'')
-  const { data, error}=fetchData
+
   
   useEffect(()=>{
-    if(data && !error){
-      dispatch({type:'set_pokemon', data:data, backgroundColor:{backgroundColor:'#2a75bb'}})
+    if(fetchData.data && !fetchData.error){
+      dispatch({type:'set_pokemon', data:fetchData.data, backgroundColor:{backgroundColor:'#2a75bb'}})
     }
-    if(dataBusqueda!=='' && error){
+    if(dataBusqueda!=='' && fetchData.error){
       dispatch({type:'set_error', data:`Ha ocurrido un error, verifica si el nombre: ${dataBusqueda} está bien escrito`}) 
     }
     if(dataBusqueda.trim()===''){
       dispatch({type:'reset'}) 
     }
-  }, [data, error])
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [fetchData])
 
   if(state.error_message && dataBusqueda!==''){
     message_error=<h5 className='message_error'>{state.error_message}</h5>

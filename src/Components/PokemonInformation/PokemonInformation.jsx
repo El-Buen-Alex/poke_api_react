@@ -15,6 +15,7 @@ export default function PokemonInformation() {
             }else if(urlState.current_side==="back"){
               return {urlActive:state.pokemon.sprites.front_default, current_side:'front'}
             }
+            break;
         } 
         default:
           return urlState
@@ -27,7 +28,7 @@ export default function PokemonInformation() {
     <Modal closeModal={()=>dispatch({type:'set_pokemon', data:null, backgroundColor:''})} backgroundColor={state.backgroundColor}>
         <div className='img_container_pokemon'>
             <div className="img_pokemon_active">
-                <img id="img" src={`${urlState.urlActive}`}/>
+                <img id="img" src={`${urlState.urlActive}`} alt='pookemon_img'/>
             </div>
             <div className='controls_img' >
               <button className='btn_change_img' onClick={()=>setUrl({type:'change_side'})}>Change Side</button>
