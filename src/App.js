@@ -2,13 +2,12 @@ import {
   useEffect,
   useState,
   useReducer,
-  useContext,
 } from 'react';
 import './App.css';
 import Header from './header/Header';
 import Footer from './Footer/Footer';
 import MainContent from './MainContent/MainContent';
-import { ModalContext, ModalPokemonProvider } from './Contexts/ModalContext';
+import {  ModalPokemonProvider } from './Contexts/ModalContext';
 
 function App() {
 

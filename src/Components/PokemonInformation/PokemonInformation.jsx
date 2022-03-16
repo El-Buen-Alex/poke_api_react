@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useReducer } from 'react'
+import React, { useContext, useReducer } from 'react'
 import { ModalContext } from '../../Contexts/ModalContext'
 import Modal from '../Modal/Modal'
 import './PokemonInformation.css'

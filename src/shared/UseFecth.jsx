@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import  { useEffect, useState } from 'react'
 
 export default function UseFecth(url) {
     const [result, setResult]=useState({fetching:true, data:null, error:false})

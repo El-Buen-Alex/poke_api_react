@@ -3,7 +3,7 @@ import './Header.css'
 import logo_Pokemon from '../resources/logo_pokemon.png'
 import { ModalContext } from '../Contexts/ModalContext'
 import UseFecth from '../shared/UseFecth'
-export default function Header(props) {
+export default function Header() {
   const [dataBusqueda, setDataBusqueda] = useState('')
   let timeout;
   const {state, dispatch}=useContext(ModalContext)
