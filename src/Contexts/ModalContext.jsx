@@ -3,6 +3,12 @@ import PokemonInformation from '../Components/PokemonInformation/PokemonInformat
 
 export  const ModalContext = createContext();
 
+const stateByDefault={
+  pokemon:null,
+  backgroundColor:null,
+  error:false,
+  error_message:null
+}
 
 export const ModalPokemonProvider = ({children}) => {
   let modal_pokemon_information=null;
@@ -10,7 +16,11 @@ export const ModalPokemonProvider = ({children}) => {
   const reducer=(state, action)=>{
     switch (action.type){
       case 'set_pokemon':
-        return {...state, pokemon:action.data, backgroundColor: action.backgroundColor}
+        return {...state, pokemon:action.data, backgroundColor: action.backgroundColor, error:false, error_message:null}
+      case 'set_error':
+        return {...state, error_message: action.data, error:true}
+      case 'reset':
+        return {stateByDefault}
       default:
         return state
     }

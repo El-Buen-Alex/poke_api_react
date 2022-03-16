@@ -2,22 +2,24 @@ import {
   useEffect,
   useState,
   useReducer,
+  useContext,
 } from 'react';
 import './App.css';
 import Header from './header/Header';
 import Footer from './Footer/Footer';
 import MainContent from './MainContent/MainContent';
-import { ModalPokemonProvider } from './Contexts/ModalContext';
+import { ModalContext, ModalPokemonProvider } from './Contexts/ModalContext';
 
 function App() {
+
+  
   const [dataState, setDataState] = useState([])
+  
   const reducer=(action)=>{
     if(action.type==="next"){
       return {urlState:dataState.next}
     }else if(action.type==="previous"){
       return {urlState:dataState.previous}
-    }else if(action.type==="search" && action.data){
-      return {urlState:`https://pokeapi.co/api/v2/pokemon/${action.data}/`}
     }
     else{
       throw new Error();
@@ -36,12 +38,15 @@ function App() {
       })
   }, [urlApiState.urlState])
 
-
+  
   return ( 
     <ModalPokemonProvider>
       <Header searchData={(namePokemon)=> dispatch({type:"search", data:namePokemon})}/>
+      
       <div className='container_main'>
+     
       <div className="flex">
+     
       {
         dataState.results? dataState.results.map(pokemon=>{
           return <MainContent url={pokemon.url} key={pokemon.name}/>
